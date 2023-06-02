@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+        login();
         Connection con = Database.getConnection();
         if (con != null) {
             System.out.println("Connected to the database");
@@ -35,6 +36,14 @@ public class Main {
             default:
                 System.out.println("opcio no valida");
         }
+    }
+
+    private static void login() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Usuari:");
+        String usr = scanner.nextLine();
+        System.out.println("Password:");
+        String psw = scanner.nextLine();
     }
 
     private static void compra() {
