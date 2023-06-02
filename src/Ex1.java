@@ -1,24 +1,17 @@
 import java.sql.*;
 
 //First, apply mysql-connector to project structure
-public class Main {
-    private static String DB_USERNAME = "root";
-    private static String DB_PASSWORD = "password";
-    private static String DB_PORT = ":3306";
-    private static String DB_HOST = "localhost";
-    private static String DB_DBNAME = "db";
-
+public class Ex1 {
     public static void main(String[] args) throws SQLException {
-        String url = "jdbc:mysql://" + DB_HOST + DB_PORT + "/" + DB_DBNAME;
-        Connection con = DriverManager.getConnection(url, DB_USERNAME, DB_PASSWORD);
+        Connection con = Database.con;
         if (con != null) {
             System.out.println("Connected to the database");
         } else throw new RuntimeException("Err: Not connected to database");
 
-        String query = "Show tables";
+        String query = "SELECT * FROM taula1";
         PreparedStatement ps = con.prepareStatement(query);
         ResultSet result = ps.executeQuery(query);
-        System.out.println("Tables in the current database: ");
+        System.out.println("Found in table: ");
         while(result.next()) {
             System.out.print(result.getString(1));
             System.out.println();
