@@ -1,9 +1,13 @@
+package controllers;
+
+import repos.Database;
+
 import java.sql.*;
 
 //First, apply mysql-connector to project structure
 public class Ex1 {
     public static void main(String[] args) throws SQLException {
-        Connection con = Database.con;
+        Connection con = Database.getConnection();
         if (con != null) {
             System.out.println("Connected to the database");
         } else throw new RuntimeException("Err: Not connected to database");
