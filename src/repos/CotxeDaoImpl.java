@@ -12,6 +12,6 @@ public class CotxeDaoImpl implements CotxeDao {
     public void save(Cotxe cotxe) throws SQLException {
         Connection con = Database.getConnection();
         PreparedStatement ps = con.prepareStatement("insert into cotxe (nat, any) values (?,')");
-        
+
     }
 }

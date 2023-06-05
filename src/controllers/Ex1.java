@@ -2,6 +2,7 @@ package controllers;
 
 import repos.Database;
 
+import javax.swing.*;
 import java.sql.*;
 
 //First, apply mysql-connector to project structure
@@ -12,13 +13,14 @@ public class Ex1 {
             System.out.println("Connected to the database");
         } else throw new RuntimeException("Err: Not connected to database");
 
-        String query = "SELECT * FROM taula1";
+        String query = "SELECT * FROM cotxes";
         PreparedStatement ps = con.prepareStatement(query);
         ResultSet result = ps.executeQuery(query);
         System.out.println("Found in table: ");
         while(result.next()) {
-            System.out.print(result.getString(1));
-            System.out.println();
+            System.out.print(result.getString(1)+ " ");
+            System.out.print(result.getString(2)+ " ");
+            System.out.println(result.getDate(3)+ " ");
         }
 
         /*String sql = "insert into test (text) values (?)";

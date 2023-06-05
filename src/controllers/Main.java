@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Compra;
+import models.Propietari;
 import repos.CompraDao;
 import repos.CompraDaoImpl;
 import repos.Database;
@@ -20,9 +21,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("1 per veure la taula");
         System.out.println("2 per afegir un cotxe");
-        System.out.println("3 comprar un cotxe");
+        System.out.println("3 vendre un cotxe");
+        System.out.println("4 comprar un cotxe");
+        System.out.println("5 afegir propietari");
+        //Todo afegir propietari
         int action = scanner.nextInt();
-        switch (action){
+        switch (action) {
             case 1:
                 watchTable(con);
                 break;
@@ -34,9 +38,28 @@ public class Main {
                 break;
             case 4:
                 compraComprador();
+            case 5:
+                afegirPropietari();
             default:
                 System.out.println("opcio no valida");
         }
+    }
+
+    private static void afegirPropietari() {
+        Scanner scanner = new Scanner(System.in);
+        Propietari propietari = new Propietari();
+        System.out.println("id:");
+        int id = scanner.nextInt();
+        System.out.println("nom:");
+        String nom = scanner.nextLine();
+        System.out.println("nomUsuari:");
+        String usuari = scanner.nextLine();
+        System.out.println("Password:");
+        String password = scanner.nextLine();
+        propietari.setId(id);
+        propietari.setNom(nom);
+        propietari.setUsername(usuari);
+        propietari.setPassword(password);
     }
 
     private static void compraComprador() {
@@ -49,12 +72,13 @@ public class Main {
         try {
             CompraDao compraDao = new CompraDaoImpl();
             Compra compra = compraDao.findByCotxeAndPasswordAndNotValid(idCotxe, password);
-            if (compra == null){
+            if (compra == null) {
                 System.out.println("Compra no autoritzada");
                 return;
             }
             compra.setValid(true);
-            compra.setIdComprador(usuari.getId());
+            //Todo
+            //compra.setIdComprador(usuari.getId());
             compraDao.save(compra);
 
         } catch (SQLException e) {
@@ -94,7 +118,8 @@ public class Main {
 
         try {
             CompraDao compraDao = new CompraDaoImpl();
-            compraDao.save;
+            //Todo
+            //compraDao.save;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -123,7 +148,7 @@ public class Main {
 
     //Imprimir el contingut
     private static void watchTable(Connection con) throws SQLException {
-        String query2  = "SELECT * FROM `cotxes`;";
+        String query2 = "SELECT * FROM `cotxes`;";
         PreparedStatement ps = con.prepareStatement(query2);
         ResultSet result = ps.executeQuery(query2);
 
@@ -132,7 +157,7 @@ public class Main {
             int id = result.getInt("id");
             String matricula = result.getString("matricula");
             int any_matriculacio = result.getInt("any_matriculacio");
-            System.out.println(id+" "+matricula+" "+any_matriculacio);
+            System.out.println(id + " " + matricula + " " + any_matriculacio);
         }
         ps.close();
     }
