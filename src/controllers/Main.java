@@ -3,7 +3,6 @@ package controllers;
 import models.Compra;
 import repos.CompraDao;
 import repos.CompraDaoImpl;
-import repos.CotxeDaoImpl;
 import repos.Database;
 import models.Cotxe;
 
@@ -31,11 +30,37 @@ public class Main {
                 addEntry(con);
                 break;
             case 3:
-                compra();
+                compraVenedor();
                 break;
+            case 4:
+                compraComprador();
             default:
                 System.out.println("opcio no valida");
         }
+    }
+
+    private static void compraComprador() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("id cotxe:");
+        int idCotxe = scanner.nextInt();
+        System.out.println("Contrasenya compra/Venta");
+        String password = scanner.nextLine();
+
+        try {
+            CompraDao compraDao = new CompraDaoImpl();
+            Compra compra = compraDao.findByCotxeAndPasswordAndNotValid(idCotxe, password);
+            if (compra == null){
+                System.out.println("Compra no autoritzada");
+                return;
+            }
+            compra.setValid(true);
+            compra.setIdComprador(usuari.getId());
+            compraDao.save(compra);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static void login() {
@@ -46,7 +71,7 @@ public class Main {
         String psw = scanner.nextLine();
     }
 
-    private static void compra() {
+    private static void compraVenedor() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("id del cotxe:");
         int idCotxe = scanner.nextInt();
@@ -56,17 +81,22 @@ public class Main {
         int idVenedor = scanner.nextInt();
         System.out.println("preu:");
         int preu = scanner.nextInt();
+        System.out.println("Contrasenya compra/Venta");
+        String passCompraVenda = scanner.nextLine();
         Compra compra = new Compra();
         compra.setIdCotxe(idCotxe);
         compra.setIdComprador(idComprador);
         compra.setIdVenedor(idVenedor);
         compra.setPreu(preu);
         compra.setData(new Date(System.currentTimeMillis()));
+        compra.setValid(false);
+        compra.setPassword(passCompraVenda);
 
         try {
             CompraDao compraDao = new CompraDaoImpl();
-        } catch (Error e){
-            throw new RuntimeException("e");
+            compraDao.save;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

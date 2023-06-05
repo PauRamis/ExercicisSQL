@@ -8,6 +8,8 @@ public class Compra {
     int idVenedor;
     int idCotxe;
     Date data;
+    boolean valid;
+    String password;
 
     public int getPreu() {
         return preu;
@@ -47,5 +49,21 @@ public class Compra {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
